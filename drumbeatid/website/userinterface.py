@@ -2,11 +2,12 @@ from typing import final
 import streamlit as st
 import requests
 from wavinfo import WavInfoReader
-#from pydub import AudioSegment
 from scipy.io import wavfile
 from scipy.io.wavfile import read
 #from dotenv import load_dotenv
-import os
+#from pydub import AudioSegment
+
+
 
 # Example local Docker container URL
 # url = 'http://api:8000'
@@ -37,28 +38,17 @@ uploaded_wav = st.file_uploader("Choose a WAV file", type="wav", accept_multiple
 
 
 if uploaded_wav is not None:
-    # st.write('### Play audio')
-    # audio_bytes = uploaded_wav.read()
-    # st.audio(audio_bytes, format='audio/wav')
-
-    res = requests.post(url + "/upload_wav", files={'wav': uploaded_wav })
-    genre = res.json()['genre']
-
     # read and play the audio file
     st.write('### Play audio')
     audio_bytes = uploaded_wav.read()
     st.audio(audio_bytes, format='audio/wav')
 
-   # Progress bar
-    st.spinner("Sending the Audiofile to the API ...")
-
-    # read and play the audio file
-    # st.write('### Play audio')
-    # audio_bytes = uploaded_wav.read()
-    # st.audio(audio_bytes, format='audio/wav')
-
-
     if st.button('Analyze Audiofile'):
+        # Progress bar
+        st.spinner("Sending the Audiofile to the API ...")
+        # calling API for prediction
+        res = requests.post(url + "/upload_wav", files={'wav': audio_bytes})
+        genre = res.json()['genre']
         st.write('### Analysis of Wave-File performed ! 🎉')
         # res = requests.post(url + "/upload_wav", files={'wav': uploaded_wav })
         # genre = res.json()['genre']
@@ -83,7 +73,7 @@ if uploaded_wav is not None:
                 st.image("https://drummagazine.com/wp-content/uploads/2021/12/questlove-soundclash-scaled.jpg", width=300)
                 st.caption(f'### Questlove, drummer of The Roots, 1971-today', unsafe_allow_html=False)
             else:
-                st.write(f"### We are not sure 😨, it could be soul")
+                st.write(f"### We are not sure 😨 🤖 , it could be soul or latin")
                 st.image("https://i.pinimg.com/originals/45/76/ba/4576ba99b4c56ad17c8a3bd40e1e5b84.jpg", width=300)
                 st.caption(f'### Clyde Stubblefield, collaborated with James Brown, 1943-2017', unsafe_allow_html=False)
 
