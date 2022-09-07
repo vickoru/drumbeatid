@@ -7,7 +7,8 @@ def dictionary_genres(idx, model_mode='reducedgenre'):
             1: 'hiphop',
             2: 'jazz',
             3: 'latin',
-            4: 'rock'
+            4: 'rock',
+            5:  "unknown"
         }
     else:
         dict_genres = {0: 'afrobeat',
