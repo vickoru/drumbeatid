@@ -17,7 +17,7 @@ import os
 
 from drumbeatid.ml_logic.registry import load_model
 from drumbeatid.ml_logic.preprocessor import process, process_audiofile
-from drumbeatid.ml_logic.dictionary import dictionary_genres
+from drumbeatid.ml_logic.dictionary import predict_genres
 
 
 #from main_functions import bla bla bl
@@ -46,12 +46,12 @@ async def receive_wav(wav: bytes=File(...)):
 
     y_pred = app.state.model.predict([X1, X2])
     print(y_pred)
-    pred = np.argmax(y_pred)
-    print(pred)
-    predicted_genre = dictionary_genres(pred)
-    print(predicted_genre)
+    # pred = np.argmax(y_pred)
+    # print(pred)
+    prediction = predict_genres(y_pred[0])
+    print(prediction)
 
-    return {'genre': str(predicted_genre)}
+    return {'genre': prediction}
 
 
     # check_audio = valid_audio(x)
