@@ -1,3 +1,16 @@
+# ---------------------------------
+#	RUN
+# ---------------------------------
+DIRWEB=drumbeatid/website
+
+run_app:run_website run_api
+
+run_website:
+	-@streamlit run drumbeatid/website/userinterface.py
+
+run_api:
+	-@uvicorn drumbeatid.api.api:app --reload
+
 # ----------------------------------
 #          INSTALL & TEST
 # ----------------------------------
